@@ -3,6 +3,8 @@ use std::fs;
 use std::path::Path;
 use tauri::Manager;
 
+const AUDIO_EXTENSIONS: &[&str] = &["mp3", "wav", "flac", "ogg", "m4a", "wma"];
+
 #[derive(Serialize)]
 pub struct AudioFile {
     path: String,
@@ -42,8 +44,6 @@ fn get_audio_files(app: tauri::AppHandle, dir: String) -> Result<Vec<AudioFile>,
         return Err("Access denied: path not allowed".to_string());
     }
 
-    let extensions = ["mp3", "wav", "flac", "ogg", "m4a", "wma"];
-
     match fs::read_dir(path) {
         Ok(entries) => Ok(entries
             .filter_map(|entry| {
@@ -51,7 +51,7 @@ fn get_audio_files(app: tauri::AppHandle, dir: String) -> Result<Vec<AudioFile>,
                 let path = entry.path();
                 if path.is_file() {
                     let ext = path.extension()?.to_str()?.to_lowercase();
-                    if extensions.contains(&ext.as_str()) {
+                    if AUDIO_EXTENSIONS.contains(&ext.as_str()) {
                         let metadata = fs::metadata(&path).ok()?;
                         return Some(AudioFile {
                             path: path.to_str()?.to_owned(),
