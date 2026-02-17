@@ -51,7 +51,7 @@ fn get_audio_files(app: tauri::AppHandle, dir: String) -> Result<Vec<AudioFile>,
                 let path = entry.path();
                 if path.is_file() {
                     let ext = path.extension()?.to_str()?.to_lowercase();
-                    if AUDIO_EXTENSIONS.contains(&ext.as_str()) {
+                    if AUDIO_EXTENSIONS.contains(&ext) {
                         let metadata = fs::metadata(&path).ok()?;
                         return Some(AudioFile {
                             path: path.to_str()?.to_owned(),
