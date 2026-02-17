@@ -23,11 +23,6 @@
 
   $: visibleItems = items.slice(startIndex + renderStart, startIndex + renderEnd).map((item, i) => ({
     item,
-    // Provide the index relative to the full list, or relative to the visible list?
-    // The original code used `i` which was index in `fileQueue`.
-    // So we should provide the absolute index: `startIndex + renderStart + i`.
-    // Wait, original code `{#each fileQueue as file, i}` provided absolute index `i`.
-    // So `originalIndex` here should be `startIndex + renderStart + i`.
     index: startIndex + renderStart + i,
     key: item.path || (startIndex + renderStart + i)
   }));
