@@ -1,0 +1,523 @@
+:root {
+	--font-family: sans-serif;
+	--zoom-level: 1.1;
+
+	/* Global Palette - non-theme specific */
+	--c-secondary: #6c757d;
+	--c-danger: #dc3545;
+	--c-danger-dark: #8b1e2e;
+	--c-text-dark: #adb5bd;
+	
+	/* Backgrounds */
+	--bg-main: #212529;
+	--bg-panel: #343a40;
+	--bg-panel-inset: color-mix(in srgb, var(--bg-main) 85%, white);
+	--bg-black: #000;
+
+	/* Borders */
+	--border-radius: 6px;
+	--border-width: 3px;
+	--border-color: #495057;
+	--border-color-strong: #6c757d;
+
+	/* Transitions */
+	--transition-fast: all 0.1s ease;
+	--transition-slow: all 0.2s ease;
+}
+
+/* Theme Definitions */
+body.theme-blue {
+	--c-primary: #007bff;
+	--c-primary-hover: #0056b3;
+	--c-accent: #ff8c00;
+	--c-accent-hover: #e67a00;
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #FF8400 30%); /* Tinted white with Inverted Blue */
+}
+
+body.theme-red {
+	--c-primary: #dc3545;
+	--c-primary-hover: #c82333;
+	--c-accent: #ffc107;
+	--c-accent-hover: #e0a800;
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #23CABA 30%); /* Tinted white with Inverted Red */
+}
+
+body.theme-green {
+	--c-primary: #28a745;
+	--c-primary-hover: #218838;
+	--c-accent: #17a2b8;
+	--c-accent-hover: #138496;
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #D758BA 30%); /* Tinted white with Inverted Green */
+}
+
+/* New Theme Definitions */
+body.theme-purple {
+	--c-primary: #8A2BE2; /* Blue Violet */
+	--c-primary-hover: #6A0DAD; /* Dark Violet */
+	--c-accent: #DA70D6; /* Orchid */
+	--c-accent-hover: #BA55D3; /* Medium Orchid */
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #75D41D 30%); /* Tinted white with Inverted Purple */
+}
+
+body.theme-pink {
+	--c-primary: #FF69B4; /* Hot Pink */
+	--c-primary-hover: #FF1493; /* Deep Pink */
+	--c-accent: #FFA07A; /* Light Salmon */
+	--c-accent-hover: #FA8072; /* Salmon */
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #00964B 30%); /* Tinted white with Inverted Pink */
+}
+
+body.theme-orange {
+	--c-primary: #FF8C00; /* Dark Orange */
+	--c-primary-hover: #FF7F50; /* Coral */
+	--c-accent: #ADFF2F; /* Green Yellow */
+	--c-accent-hover: #7CFC00; /* Lawn Green */
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #0073FF 30%); /* Tinted white with Inverted Orange */
+}
+
+/* Additional New Theme Definitions */
+body.theme-teal {
+	--c-primary: #008080; /* Teal */
+	--c-primary-hover: #006666; /* Darker Teal */
+	--c-accent: #30D5C8; /* Turquoise */
+	--c-accent-hover: #48D1CC; /* Medium Turquoise */
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #FF7F7F 30%); /* Tinted white with Inverted Teal */
+}
+
+body.theme-yellow {
+	--c-primary: #FFD700; /* Gold */
+	--c-primary-hover: #E6BE00; /* Darker Gold */
+	--c-accent: #FF4500; /* OrangeRed */
+	--c-accent-hover: #CC3700; /* Darker OrangeRed */
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #0028FF 30%); /* Tinted white with Inverted Yellow */
+}
+
+body.theme-brown {
+	--c-primary: #A52A2A; /* Brown */
+	--c-primary-hover: #800000; /* Maroon */
+	--c-accent: #F4A460; /* SandyBrown */
+	--c-accent-hover: #CD853F; /* Peru */
+	--c-border-primary: color-mix(in srgb, var(--c-primary) 40%, black);
+	--c-text: color-mix(in srgb, #f8f9fa 70%, #5AD5D5 30%); /* Tinted white with Inverted Brown */
+}
+
+html, body {
+	zoom: var(--zoom-level);
+	background-color: var(--bg-main);
+	color: var(--c-text);
+	font-family: var(--font-family);
+	margin: 0;
+	overflow: hidden;
+}
+
+/* Styles moved from +page.svelte */
+  .panel {
+    background: var(--bg-panel);
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--c-border-primary);
+  }
+
+  .container { 
+    padding: 0.4rem; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.33rem; 
+    height: 100vh; 
+    box-sizing: border-box; 
+  }
+
+  .header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    font-weight: bold; 
+    padding: 0.5rem;
+  }
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem; /* Adjusted to 1/4 of original */
+    margin-left: auto; /* Push to the right */
+  }
+  .brand { 
+    color: var(--c-primary); 
+    font-size: 1.2rem; 
+  }
+
+  .input-row { 
+    display: flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    padding: 6px 12px; 
+    border: none;
+  }
+  .input-row label { 
+    font-family: monospace; 
+    color: var(--c-primary); 
+    font-weight: bold; 
+    width: 30px; 
+  }
+  .input-row input { 
+    flex: 1; 
+    background: var(--bg-panel-inset); /* Changed from transparent */
+    border: var(--border-width) solid var(--border-color); /* Added subtle outline */
+    color: var(--c-text); 
+    outline: none; 
+    font-size: 0.9rem;
+    padding: 4px 8px; /* Added internal padding */
+    border-radius: var(--border-radius); /* Added border-radius */
+  }
+
+  .waveform-frame {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.25rem 0.5rem 0.5rem 0.5rem; /* Tighter top padding */
+  }
+
+  #waveform { 
+    background: var(--bg-black); 
+    min-height: 40px; /* Changed from 120px to match slider's minimum */
+    border: none;
+  }
+
+  .controls { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+  }
+
+  .zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem; /* Harmonized with .header-controls */
+    margin-right: 1rem;
+  }
+  .zoom-controls .btn {
+    min-width: 2.2rem; /* Ensure consistent width for +/- buttons */
+    background: var(--bg-panel);
+    border: var(--border-width) solid var(--c-primary);
+  }
+  .zoom-controls .btn:hover {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+  }
+
+  .button-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); 
+    gap: 0.2rem;
+    margin-top: auto; /* Sticks the button grid to the bottom */
+  }
+  
+  .stats {
+    color: var(--c-primary);
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-color: var(--c-primary);
+    line-height: 1;
+  }
+  .stats-value {
+    color: var(--c-text);
+  }
+  
+  .codec-indicator {
+    color: var(--c-text);
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border: var(--border-width) solid var(--c-primary);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+  .codec-indicator strong {
+    color: var(--c-primary);
+    margin-right: 4px;
+    text-transform: uppercase;
+    font-size: 0.9rem; /* Adjusted to match remaining number */
+    letter-spacing: 0.5px;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    cursor: pointer;
+    accent-color: var(--c-primary);
+    height: 4px;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; /* 60% of ~20px */
+    height: 12px; /* 60% of ~20px */
+    border-radius: 50%;
+    background: var(--c-primary);
+    cursor: pointer;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--c-primary);
+    cursor: pointer;
+  }
+
+  .file-list {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-panel-inset);
+    overflow-y: auto; /* Allow vertical scrolling */
+    resize: vertical;   /* Allow vertical resizing */
+    min-height: 100px;  /* Don't allow it to become too small */
+    height: 200px;      /* Give it an initial height */
+    max-height: 60vh;   /* Don't allow it to become too large */
+  }
+  .file-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 100px 100px;
+    gap: 12px;
+    padding: 4px 12px; /* Tighten vertically */
+    border-bottom: 1px solid var(--border-color);
+    font-family: monospace;
+    font-size: 0.85rem;
+    align-items: center;
+    transition: background-color 0.2s ease;
+  }
+  .file-row:nth-child(even) {
+    background-color: color-mix(in srgb, var(--bg-panel-inset) 90%, white); /* Subtle alternate shading */
+  }
+  .col-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--c-text);
+  }
+  .col-size, .col-date {
+    color: var(--c-text-dark);
+    text-align: right;
+  }
+  /* Active file row attribute text */
+  .active .col-size, .active .col-date {
+    font-size: 1.0rem;
+    color: var(--c-text);
+  }
+  .active {
+    background: color-mix(in srgb, var(--c-primary) 15%, var(--bg-panel)); /* Distinct blue background */
+    border-left: 3px solid var(--c-primary);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue glow */
+  }
+  .active .col-name {
+    font-size: 1.2rem; /* Increased font size by 0.1rem */
+    color: var(--c-primary); /* Blue text */
+  }
+
+  /* === BUTTONS === */
+  .btn {
+    color: var(--c-text);
+    border: var(--border-width) solid transparent;
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition-slow);
+    font-size: 0.9rem;
+  }
+  .btn-compact {
+    padding: 4px 8px; /* Matching the zoom-controls buttons */
+  }
+  
+  .btn:hover {
+    filter: brightness(1.1);
+  }
+
+  .btn-primary {
+    background-color: var(--c-primary);
+  }
+  .btn-primary:hover {
+    background-color: var(--c-primary-hover);
+  }
+
+  .btn-secondary {
+    background-color: var(--c-secondary);
+  }
+
+  .btn-danger {
+    background-color: var(--c-danger);
+  }
+  .btn-danger-outline {
+    background-color: transparent;
+    border-color: var(--c-accent);
+    color: var(--c-text);
+  }
+  .btn-danger-outline:hover {
+    background: var(--c-accent); 
+    border-color: var(--c-primary);
+    color: var(--c-text);
+  }
+
+  .btn-icon {
+    padding: 6px;
+    background: transparent;
+  }
+  .btn-icon-lg {
+    padding: 12px;
+    border-radius: 50%;
+  }
+
+  .btn-folder-icon {
+    color: var(--c-text);
+    background: var(--bg-panel-inset);
+    border: var(--border-width) solid var(--c-primary);
+    padding: 6px; /* Similar to btn-icon size */
+    border-radius: var(--border-radius);
+    transition: var(--transition-slow);
+  }
+  .btn-folder-icon:hover {
+      filter: brightness(1.2);
+  }
+
+  .key-hint {
+    position: relative;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border: var(--border-width) solid var(--c-primary);
+    min-width: 12px;
+    text-align: center;
+    background: var(--bg-panel);
+    color: var(--c-text);
+    line-height: 1;
+  }
+  .sort-btn .key-hint {
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .exit-btn {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    z-index: 1000;
+    opacity: 0.6;
+    background-color: var(--c-danger-dark);
+    border-color: #663333;
+  }
+  .exit-btn:hover {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(204, 0, 0, 0.4);
+    background-color: var(--c-danger);
+  }
+
+  .vfd-exit-btn {
+    display: none; /* Hide old button */
+  }
+  .btn-active {
+    background-color: var(--c-primary) !important;
+    color: white;
+  }
+  
+  .btn-active svg {
+    color: white;
+  }
+
+  .btn-outline {
+    border: var(--border-width) solid var(--c-primary);
+    background-color: var(--bg-panel);
+  }
+  
+  .btn-outline:hover {
+    background-color: var(--c-primary);
+  }
+  
+  .btn-outline:hover svg {
+    color: white;
+  }
+
+  /* Folder icon button hover */
+  .btn-folder-icon:hover {
+    background-color: var(--c-primary) !important;
+    border: var(--border-width) solid var(--c-primary-hover) !important;
+    box-shadow: 0 0 8px var(--c-primary);
+  }
+  
+  /* Codec and Remaining panel hover */
+  .codec-indicator:hover,
+  .stats:hover {
+    background-color: var(--c-primary) !important;
+    border: var(--border-width) solid var(--c-primary-hover) !important;
+    box-shadow: 0 0 8px var(--c-primary);
+    cursor: pointer; /* Optional: shows it's interactive */
+  }
+
+  .btn-compact:hover,
+  .btn-folder-icon:hover,
+  .codec-indicator:hover,
+  .stats:hover {
+    background-color: var(--c-primary) !important;
+    border: var(--border-width) solid var(--c-primary-hover) !important;
+    box-shadow: 0 0 8px var(--c-primary);
+    color: var(--c-secondary) !important;
+  }
+  
+  /* Also change icon colors on hover */
+  .btn-compact:hover svg,
+  .btn-folder-icon:hover svg {
+    color: var(--c-secondary) !important;
+    stroke: var(--c-secondary) !important;
+  }
+
+ .btn-compact:hover {
+   background-color: var(--c-primary) !important;
+   border: var(--border-width) solid var(--c-primary-hover) !important;
+   box-shadow: 0 0 8px var(--c-primary);
+ }
+  
+  @font-face {
+    font-family: 'JetBrains Mono';
+    src: url('/fonts/jetbrains/JetBrainsMonoNerdFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+  }
+  
+  @font-face {
+    font-family: 'Fira Code';
+    src: url('/fonts/fira/FiraCodeNerdFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    src: url('/fonts/roboto/Roboto-RegularNerdFont.ttf') format('truetype');
+    font-weight: normal;
+  }
+
+  @font-face {
+    font-family: 'Open Dyslexic';
+    src: url('/fonts/opendyslexic/OpenDyslexicNerdFont-Regular.otf') format('opentype');
+    font-weight: normal;
+  }
+  
+  /* Font classes */
+  body.font-jetbrains { font-family: 'JetBrains Mono', monospace; }
+  body.font-fira { font-family: 'Fira Code', monospace; }
+  body.font-roboto { font-family: 'Roboto', sans-serif; }
+  body.font-roboto { font-family: 'Open Dyslexic', sans-serif; }
+
+  input, textarea, button, select, .panel, .btn, .file-list, .file-row {
+    font-family: inherit;
+  }
+  
