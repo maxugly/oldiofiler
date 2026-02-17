@@ -16,6 +16,7 @@
     let inDir = "";
     let outDirsString = "/good /bad /trash";
     let fileQueue = [];
+    let currentIndex = 0;
     let currentFile = null;
     let wavesurfer;
     let waveHeight = 120;
@@ -170,7 +171,7 @@
                   const filesOnDisk = await getAudioFiles(inDir);
                   const currentlyDisplayableFiles = filesOnDisk.filter(file => !skippedFilePaths.has(file.path));
 
-                  if (currentlyDisplayableFiles.length !== fileQueue.length) {
+                  if (currentlyDisplayableFiles.length !== (fileQueue.length - currentIndex)) {
                       refresh();
                   }
               }, 1000);
@@ -185,6 +186,7 @@
     console.log('refresh: getAudioFiles returned', files.length, 'files:', files);
     fileQueue = files.filter(file => !skippedFilePaths.has(file.path));
     totalFiles = fileQueue.length;
+    currentIndex = 0;
     if (!currentFile) {
       loadNext();
     }
@@ -198,7 +200,7 @@
 
     try {
         skippedFilePaths.add(currentFile.path);
-        fileQueue = fileQueue.slice(1);
+        currentIndex++;
         await loadNext();
     } catch (error) {
         console.error('Error during skip:', error);
@@ -255,9 +257,9 @@
   }
 
   async function loadNext() {
-      console.log('loadNext: called. fileQueue.length:', fileQueue.length);
-      if (fileQueue.length > 0) {
-          const nextFile = fileQueue[0];
+      console.log('loadNext: called. currentIndex:', currentIndex, 'fileQueue.length:', fileQueue.length);
+      if (currentIndex < fileQueue.length) {
+          const nextFile = fileQueue[currentIndex];
           console.log('loadNext: nextFile', nextFile);
           if (currentFile && currentFile.path === nextFile.path) return;
 
@@ -298,7 +300,7 @@
           console.log('sortFile: Executing', (sortMode === 'move' ? 'moveFile' : 'copyFile'), 'for', currentFile.path);
           await commandFunction(currentFile.path, `${inDir}/${targetSubDir.replace(/^\//, '')}`);
 
-          fileQueue = fileQueue.slice(1);
+          currentIndex++;
           await loadNext();
           } catch (error) {
               console.error('Error during sortFile:', error);
@@ -377,7 +379,7 @@
 	    <span style="color: var(--c-primary);">Codec:</span> {codec}
 	  </span>
 
-      <span class="stats panel" title="Number of files left to process">Remaining: <span class="stats-value">{fileQueue.length}</span></span>
+      <span class="stats panel" title="Number of files left to process">Remaining: <span class="stats-value">{fileQueue.length - currentIndex}</span></span>
     </div>
   </div>
 
@@ -395,13 +397,15 @@
   </div>
 
   <div class="file-list panel">
-      {#each fileQueue as file}
+      {#each fileQueue as file, i (file.path)}
+        {#if i >= currentIndex}
         <div class="file-row {currentFile?.path === file.path ? 'active' : ''}">
           <span class="col-name">{file.name}</span>
           <span class="col-size">{formatSize(file.size)}</span>
           <span class="col-date">{formatDate(file.modified)}</span>
           <span class="col-date">{formatDate(file.created)}</span>
         </div>
+        {/if}
       {/each}
   </div>
 
