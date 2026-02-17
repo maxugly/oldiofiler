@@ -1,6 +1,6 @@
 ## Application Overview
 
-The application, "Sorta," is a desktop utility designed for the rapid, manual sorting of audio files. The user selects a source directory containing audio files. The application then loads one file at a time, displaying its waveform and allowing the user to play it. Based on the audio content, the user can sort the file into one of several pre-defined subdirectories using single-key shortcuts. The core workflow is optimized for speed and keyboard-based operation, enabling a user to quickly categorize a large queue of files. The application also includes features for customizing the user interface, such as theming and zoom controls.
+The application, "oldiofiler," is a desktop utility designed for the rapid, manual sorting of audio files. The user selects a source directory containing audio files. The application then loads one file at a time, displaying its waveform and allowing the user to play it. Based on the audio content, the user can sort the file into one of several pre-defined subdirectories using single-key shortcuts. The core workflow is optimized for speed and keyboard-based operation, enabling a user to quickly categorize a large queue of files. The application also includes features for customizing the user interface, such as theming and zoom controls.
 
 ## Functionality Checklist
 
