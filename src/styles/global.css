@@ -281,6 +281,9 @@ html, body {
     max-height: 60vh;   /* Don't allow it to become too large */
   }
   .file-row {
+    height: 34px;
+    box-sizing: border-box;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 80px 100px 100px;
     gap: 12px;

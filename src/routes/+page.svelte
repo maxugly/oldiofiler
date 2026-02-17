@@ -1,4 +1,5 @@
 <script>
+  import VirtualList from '$lib/components/VirtualList.svelte';
     import '../styles/global.css';
     import { onMount } from 'svelte';
     import { formatSize, formatDate, updateZoom } from '$lib/utils';
@@ -402,18 +403,20 @@
     </div>
   </div>
 
-  <div class="file-list panel">
-      {#each fileQueue as file, i (file.path)}
-        {#if i >= currentIndex}
-        <div class="file-row {currentFile?.path === file.path ? 'active' : ''}">
+  <VirtualList
+      class="file-list panel"
+      items={fileQueue}
+      startIndex={currentIndex}
+      itemHeight={34}
+      let:item={file}
+  >
+      <div class="file-row {currentFile?.path === file.path ? 'active' : ''}">
           <span class="col-name">{file.name}</span>
           <span class="col-size">{formatSize(file.size)}</span>
           <span class="col-date">{formatDate(file.modified)}</span>
           <span class="col-date">{formatDate(file.created)}</span>
-        </div>
-        {/if}
-      {/each}
-  </div>
+      </div>
+  </VirtualList>
 
   <div class="waveform-frame panel"> <!-- New wrapper -->
     <div class="input-row">
