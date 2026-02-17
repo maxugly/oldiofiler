@@ -102,7 +102,6 @@
     $: currentPrimaryColor = getComputedStyle(document.documentElement).getPropertyValue('--c-primary').trim();
     
       onMount(() => {
-        console.log('onMount: Component mounted.');
     
         const savedTheme = localStorage.getItem('sorta-theme');
         if (savedTheme && themes.includes(savedTheme)) {
@@ -137,15 +136,12 @@
           normalize: false,
           partialRender: true,
       });
-      console.log('onMount: WaveSurfer created.', wavesurfer);
   
   
       wavesurfer.on('play', () => isPlaying = true);
       wavesurfer.on('pause', () => isPlaying = false);
       wavesurfer.on('finish', () => {
-        console.log('WaveSurfer: finish event triggered.');
         if (isRepeatEnabled) {
-          console.log('WaveSurfer: Repeat enabled, restarting current file.');
           wavesurfer.seekTo(0);
           wavesurfer.play();
         }
@@ -153,11 +149,9 @@
     });
 
   async function selectInDir() {
-      console.log('selectInDir: called.');
       const selected = await open({ directory: true });
       if (selected) {
           inDir = selected;
-          console.log('selectInDir: inDir set to', inDir);
           if (unwatch) unwatch();
           skippedFilePaths.clear();
           refresh();
@@ -179,10 +173,8 @@
   }
 
   async function refresh() {
-    console.log('refresh: called. inDir:', inDir);
     if (!inDir) return;
     const files = await getAudioFiles(inDir);
-    console.log('refresh: getAudioFiles returned', files.length, 'files:', files);
     fileQueue = files.filter(file => !skippedFilePaths.has(file.path));
     totalFiles = fileQueue.length;
     if (!currentFile) {
@@ -191,7 +183,6 @@
   }
 
   async function skip() {
-    console.log('skip: called.');
     if (!currentFile || isProcessing) return;
 
     isProcessing = true;
@@ -255,20 +246,16 @@
   }
 
   async function loadNext() {
-      console.log('loadNext: called. fileQueue.length:', fileQueue.length);
       if (fileQueue.length > 0) {
           const nextFile = fileQueue[0];
-          console.log('loadNext: nextFile', nextFile);
           if (currentFile && currentFile.path === nextFile.path) return;
 
           currentFile = nextFile;
           const assetUrl = convertFileSrc(currentFile.path);
-          console.log('loadNext: Loading asset:', assetUrl);
 
           wavesurfer.load(assetUrl);
 
           wavesurfer.once('ready', () => {
-              console.log('loadNext: WaveSurfer ready. Playing audio.');
               wavesurfer.setTime(0);
               wavesurfer.play().catch(() => {
                 console.error('loadNext: Error playing audio.');
@@ -279,23 +266,19 @@
       } else {
           currentFile = null;
           wavesurfer.empty();
-          console.log('loadNext: fileQueue is empty.');
           if (isRepeatEnabled) {
-            console.log('loadNext: Repeat enabled, refreshing queue.');
             refresh();
           }
       }
   }
 
   async function sortFile(targetSubDir) {
-      console.log('sortFile: called with targetSubDir:', targetSubDir);
       if (!currentFile || isProcessing) return;
 
       isProcessing = true;
 
       try {
           const commandFunction = sortMode === 'move' ? moveFile : copyFile;
-          console.log('sortFile: Executing', (sortMode === 'move' ? 'moveFile' : 'copyFile'), 'for', currentFile.path);
           await commandFunction(currentFile.path, `${inDir}/${targetSubDir.replace(/^\//, '')}`);
 
           fileQueue = fileQueue.slice(1);
