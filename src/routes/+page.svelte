@@ -101,6 +101,14 @@
   
     $: buttons = outDirsString.split(' ').filter(d => d.trim() !== "");
     $: currentPrimaryColor = getComputedStyle(document.documentElement).getPropertyValue('--c-primary').trim();
+
+    $: if (wavesurfer && currentTheme) {
+        const style = getComputedStyle(document.body);
+        wavesurfer.setOptions({
+            waveColor: style.getPropertyValue('--c-primary').trim(),
+            progressColor: style.getPropertyValue('--c-primary-hover').trim()
+        });
+    }
     
       onMount(() => {
         console.log('onMount: Component mounted.');
@@ -125,10 +133,11 @@
       
       updateZoom(zoomLevel);
   
-      const style = getComputedStyle(document.documentElement);
+      const style = getComputedStyle(document.body);
       const waveColor = style.getPropertyValue('--c-primary').trim();
       const progressColor = style.getPropertyValue('--c-primary-hover').trim();
   
+
       wavesurfer = WaveSurfer.create({
           container: '#waveform',
           waveColor: waveColor || '#007bff',
