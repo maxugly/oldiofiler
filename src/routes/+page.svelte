@@ -219,9 +219,6 @@
       wavesurfer.skip(5);
     } else if (e.key === 'ArrowLeft') {
       wavesurfer.skip(-5);
-    } else if (e.key >= '1' && e.key <= '9') {
-      const index = parseInt(e.key) - 1;
-      if (buttons[index]) sortFile(buttons[index]);
     } else if ((e.key >= '1' && e.key <= '9') || e.key === '0') {
       const index = parseInt(e.key === '0' ? '10' : e.key) - 1;
       if (buttons[index]) sortFile(buttons[index]);
