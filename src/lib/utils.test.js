@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { formatSize } from './utils.js';
+import { formatSize, formatDate } from './utils.js';
 
 test('formatSize should format 0 bytes correctly', () => {
   assert.strictEqual(formatSize(0), '0 B');
@@ -38,4 +38,24 @@ test('formatSize should handle sizes larger than GB correctly', () => {
   const oneTB = 1024 * 1024 * 1024 * 1024;
   // Updated expectation to match implementation supporting TB
   assert.strictEqual(formatSize(oneTB), '1 TB');
+});
+
+test('formatDate should format timestamp correctly using toLocaleDateString', (t) => {
+  const ms = 1700000000000;
+  const mockResult = 'Nov 14, 23';
+
+  const mock = t.mock.method(Date.prototype, 'toLocaleDateString', () => mockResult);
+
+  const result = formatDate(ms);
+
+  assert.strictEqual(result, mockResult);
+  assert.strictEqual(mock.mock.callCount(), 1);
+
+  const call = mock.mock.calls[0];
+  assert.strictEqual(call.arguments[0], undefined);
+  assert.deepStrictEqual(call.arguments[1], {
+    month: 'short',
+    day: 'numeric',
+    year: '2-digit'
+  });
 });
