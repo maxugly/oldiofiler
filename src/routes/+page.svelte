@@ -179,9 +179,14 @@
               clearTimeout(debounceTimer);
               debounceTimer = setTimeout(async () => {
                   const filesOnDisk = await getAudioFiles(inDir);
-                  const currentlyDisplayableFiles = filesOnDisk.filter(file => !skippedFilePaths.has(file.path));
+                  let displayableCount = 0;
+                  for (let i = 0; i < filesOnDisk.length; i++) {
+                      if (!skippedFilePaths.has(filesOnDisk[i].path)) {
+                          displayableCount++;
+                      }
+                  }
 
-                  if (currentlyDisplayableFiles.length !== (fileQueue.length - currentIndex)) {
+                  if (displayableCount !== (fileQueue.length - currentIndex)) {
                       refresh();
                   }
               }, 1000);
